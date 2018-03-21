@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import junit.framework.Test;
+
 public class StartActivity extends AppCompatActivity {
 
     @Override
@@ -23,5 +25,32 @@ public class StartActivity extends AppCompatActivity {
 
             }
         });
+        Button weather_fc=(Button) findViewById(R.id.button_to_fc);
+        weather_fc.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent it=new Intent(getApplicationContext(),WeatherForecast.class);
+                startActivity(it);
+            }
+        });
+
+        Button chat_b=(Button) findViewById(R.id.button_to_chat);
+        chat_b.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent it=new Intent(getApplicationContext(),ChatWindow.class);
+                startActivity(it);
+            }
+        });
+
+        Button Test_b=(Button) findViewById(R.id.button_to_Test);
+        Test_b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it=new Intent(getApplicationContext(),TestActivity.class);
+                startActivity(it);
+            }
+        });
+
     }
 }
