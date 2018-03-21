@@ -40,9 +40,8 @@ public class WeatherForecast extends AppCompatActivity {
         ProgressBar pb=(ProgressBar)findViewById(R.id.Progress_bar);
         pb.setVisibility(View.VISIBLE);
 
-        factoryQue fq_thread = new factoryQue();
-        fq_thread.execute();
-
+        factoryQue fq = new factoryQue();
+        fq.execute();
 
     }
 
@@ -51,7 +50,7 @@ public class WeatherForecast extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String in="";
             try {
-              URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Ottawa,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
+              URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Toronto,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
               HttpURLConnection hc =(HttpURLConnection) url.openConnection();
               InputStream inputSt=hc.getInputStream();
 
@@ -67,31 +66,31 @@ public class WeatherForecast extends AppCompatActivity {
                       if(xpp.getName().equals("temperature")){
                             max= xpp.getAttributeValue(null,"max");
                             publishProgress(20);
-                            Thread.sleep(1000);
+                         //   Thread.sleep(600);
                             Log.i("Getting Max temp",max);
 
                           min=xpp.getAttributeValue(null,"min");
                           publishProgress(40);
-                          Thread.sleep(1000);
+                          //Thread.sleep(400);
                           Log.i("Getting Min temp",min);
 
                           current=xpp.getAttributeValue(null,"value");
                           publishProgress(60);
-                          Thread.sleep(1000);
+                         // Thread.sleep(100);
                           Log.i("Getting Current temp",current);
 
 
                       }else if (xpp.getName().equals("speed")){
                           speed=xpp.getAttributeValue(null,"value");
                           publishProgress(80);
-                          Thread.sleep(1000);
+                         // Thread.sleep(200);
                           Log.i("Getting speed",speed);
 
 
                       }else if(xpp.getName().equals("weather")){
                           iconName=xpp.getAttributeValue(null,"icon");
-                          publishProgress(100);
-                          Thread.sleep(1000);
+                          publishProgress(82);
+                          //Thread.sleep(100);
                           Log.i("Getting pic",iconName);
 
                             Log.i("Checking local icon",iconName);
@@ -101,7 +100,9 @@ public class WeatherForecast extends AppCompatActivity {
                                 FileOutputStream out=openFileOutput(iconName+".png",MODE_PRIVATE);
                                 inner_img.compress(Bitmap.CompressFormat.PNG,80,out);
                                 Log.i("downloading icon",iconName);
+                                publishProgress(90);
                                 out.flush();out.close();
+
                                 FileInputStream fileIn=null;
                                 try{
                                     fileIn =openFileInput(iconName+".png");
@@ -111,23 +112,19 @@ public class WeatherForecast extends AppCompatActivity {
                                 }
                                 image= BitmapFactory.decodeStream(fileIn);
 
-
-
                           }else {
                               Log.i("Icon exists",iconName);
-                              FileInputStream finput=null;
+                              FileInputStream fileput=null;
                               try{
-                                  finput =openFileInput(iconName+".png");
+                                  fileput =openFileInput(iconName+".png");
 
                               }catch (FileNotFoundException e){
                                   e.printStackTrace();
                               }
-                              image= BitmapFactory.decodeStream(finput);
-                          }
+                              image= BitmapFactory.decodeStream(fileput);
+                          }publishProgress(100);
 
                       }
-
-
 
                   }
 
@@ -184,16 +181,16 @@ public class WeatherForecast extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             TextView spdText=(TextView)findViewById(R.id.W_speed);
-            spdText.setText("Wind speed: "+speed);
+            spdText.setText(getString(R.string.wind_speed)+" : "+speed);
 
             TextView currentTempview=(TextView)findViewById(R.id.current_temp);
-            currentTempview.setText("Current temp: "+current);
+            currentTempview.setText(getString(R.string.cur_tep)+" : "+current);
 
             TextView minTempView=(TextView)findViewById(R.id.Mini_temp);
-            minTempView.setText("Min Temp: "+min);
+            minTempView.setText(getString(R.string.min_tep)+" : "+min);
 
             TextView maxTempView=(TextView)findViewById(R.id.Max_temp);
-            maxTempView.setText("Max temp: "+max);
+            maxTempView.setText(getString(R.string.max_tep)+" : "+max);
 
             ImageView imageView=(ImageView) findViewById(R.id.weather_img);
             imageView.setImageBitmap(image);
@@ -202,8 +199,6 @@ public class WeatherForecast extends AppCompatActivity {
             pb.setVisibility(View.INVISIBLE);
 
         }
-
-
 
     }
 
