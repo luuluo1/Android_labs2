@@ -46,7 +46,7 @@ public class TestActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
            try {
-               URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Ottawa,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
+               URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Toronto,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
                HttpURLConnection hc= (HttpURLConnection) url.openConnection();
                InputStream in = hc.getInputStream();
 
@@ -80,6 +80,4 @@ public class TestActivity extends AppCompatActivity {
 
         }
     }
-
-
 }
