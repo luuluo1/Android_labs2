@@ -63,6 +63,8 @@ public class WeatherForecast extends AppCompatActivity {
               int type;
               while((type =xpp.getEventType())!=XmlPullParser.END_DOCUMENT){
                   if(xpp.getEventType()==XmlPullParser.START_TAG){
+
+
                       if(xpp.getName().equals("temperature")){
                             max= xpp.getAttributeValue(null,"max");
                             publishProgress(20);

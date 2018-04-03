@@ -52,5 +52,14 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        Button test_tb=findViewById(R.id.Test_tb);
+        test_tb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it =new Intent(getApplicationContext(),TestToolbar.class);
+                startActivity(it);
+            }
+        });
+
     }
 }

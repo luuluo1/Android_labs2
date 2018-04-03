@@ -7,43 +7,46 @@ import android.util.Log;
 import android.widget.EditText;
 
 import java.security.Key;
-
-/**
- * Created by oliver on 2/25/2018.
- */
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-    /**
-     * Created by Ki Beom Song on 10/13/2016.
-     */
-    public class ChatDatabaseHelper extends SQLiteOpenHelper {
+public class ChatDatabaseHelper extends SQLiteOpenHelper {
 
-        protected static final String ACTIVITY_NAME = "StartActivity";
-        public static String DATABASE_NAME = "Lab5 Database";
-        public static int VERSION_NUM = 3;
-        final static String KEY_ID = "ID";
-        final static String KEY_MESSAGE = "MESSAGE";
+    public static final String DATABASE_NAME = "Chats.db";
+     static final String TABLE_NAME = "ChatMessage";
+     static final String KEY_ID = "_id";
+     static final String KEY_MESSAGE = "MESSAGE";
+    private static int VERSION_NUM = 1;
+     static final String CREATE_TABLE_MESSAGE =
+            "CREATE TABLE " + TABLE_NAME + " ("
+                    + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + KEY_MESSAGE + " text);";
+    public static final String DROP_TABLE_MESSAGE =
+            "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-        public ChatDatabaseHelper(Context ctx) {
-            super(ctx, DATABASE_NAME, null, VERSION_NUM);
-        }
+    public ChatDatabaseHelper(Context ctx){
+        super(ctx, TABLE_NAME, null, VERSION_NUM);
+    }
 
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE Lab5 (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_MESSAGE + " text);");
-            Log.i(ACTIVITY_NAME, "Calling onCreate");
-        }
+    @Override
+    public void onCreate(SQLiteDatabase db){
+        db.execSQL(CREATE_TABLE_MESSAGE);
+        Log.i("ChatDataBaseHelper", "Calling onCreate "+CREATE_TABLE_MESSAGE);
+    }
 
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
-            db.execSQL("DROP TABLE IF EXISTS Lab5");
-            onCreate(db);
-            Log.i(ACTIVITY_NAME, "Calling onUpgrade, oldVersion=" + oldVer + " newVersion=" + newVer);
-        }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer){
+        db.execSQL(DROP_TABLE_MESSAGE);
+        onCreate(db);
+        Log.i("ChatDataBaseHelper", "Calling onUpgrade, oldVersion=" + oldVer + " newVersion=" + newVer +" "+ DROP_TABLE_MESSAGE);
+    }
 
+    @Override
+    public void onOpen(SQLiteDatabase db){
+        Log.i("ChatDataBaseHelper", "Calling onOpen ");
 
     }
+
+}
